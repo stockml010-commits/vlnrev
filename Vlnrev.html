@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disajikan Personal — untukmu (dengan musik & foto)</title>
+  <!-- Font & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fef7f2;
+      color: #4a3b3b;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --maroon: #8b5a5a;
+      --maroon-light: #a57474;
+      --pink-pastel: #fcd5ce;
+      --pale-pink: #fee9e5;
+      --cream: #fef1e6;
+      --text-dark: #3e2f2f;
+      --shadow-soft: 0 15px 30px -10px rgba(139, 90, 90, 0.15);
+    }
+
+    h1, h2, h3 {
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2rem 1.8rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.1, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.1, 1);
+    }
+
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(145deg, #fff6f0 0%, #ffeae5 100%);
+      padding: 2rem;
+      border-bottom: 2px dashed var(--maroon-light);
+      position: relative;
+    }
+
+    .hero i {
+      font-size: 3.5rem;
+      color: var(--maroon);
+      margin-bottom: 1.5rem;
+      animation: softBeat 2.2s infinite ease-in-out;
+    }
+
+    @keyframes softBeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.08); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.04); }
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--maroon);
+      margin-bottom: 1rem;
+    }
+
+    .hero .mystery-text {
+      font-size: 1.2rem;
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(4px);
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      color: #5f4a4a;
+      border: 1px solid rgba(139, 90, 90, 0.3);
+      margin: 2rem 0 1.5rem;
+      max-width: 480px;
+    }
+
+    .btn {
+      background: white;
+      border: 1.5px solid var(--maroon);
+      color: var(--maroon);
+      padding: 0.9rem 2.5rem;
+      border-radius: 60px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 10px rgba(139, 90, 90, 0.1);
+    }
+
+    .btn:hover {
+      background: var(--maroon);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px -8px rgba(139, 90, 90, 0.4);
+    }
+
+    /* section */
+    .section-card {
+      background: rgba(255, 250, 245, 0.7);
+      backdrop-filter: blur(2px);
+      border-radius: 48px 48px 48px 48px;
+      padding: 2.4rem 2rem;
+      margin: 2.5rem 0;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 220, 210, 0.6);
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--maroon);
+      margin-bottom: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h2 i {
+      font-size: 2rem;
+      color: var(--maroon-light);
+    }
+
+    .story-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .story-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .story-year {
+      font-weight: 600;
+      color: var(--maroon);
+      min-width: 80px;
+      font-size: 1.2rem;
+      border-right: 2px solid var(--pink-pastel);
+      padding-right: 1rem;
+    }
+
+    .story-desc {
+      background: white;
+      padding: 1.2rem 1.5rem;
+      border-radius: 30px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.02);
+      border: 1px solid #ffe3db;
+      flex: 1;
+    }
+
+    .story-desc strong {
+      color: #a55d5d;
+      font-weight: 600;
+    }
+
+    .moment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .moment-card {
+      background: white;
+      border-radius: 30px;
+      padding: 1.6rem 1rem;
+      text-align: center;
+      border: 1px solid #ffd9cf;
+      transition: all 0.2s ease;
+    }
+
+    .moment-card i {
+      font-size: 2.2rem;
+      color: var(--maroon-light);
+      margin-bottom: 0.8rem;
+    }
+
+    .moment-card:hover {
+      transform: scale(1.02) rotate(0.5deg);
+      background: #fffcf9;
+      border-color: var(--maroon);
+    }
+
+    .like-list {
+      list-style: none;
+    }
+
+    .like-list li {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 235, 230, 0.5);
+      padding: 0.7rem 1.5rem;
+      border-radius: 60px;
+      border: 1px solid #ffd2c5;
+    }
+
+    .like-list i {
+      color: #b76262;
+      width: 28px;
+      font-size: 1.3rem;
+    }
+
+    .message-box {
+      background: white;
+      border-radius: 40px;
+      padding: 2rem;
+      font-size: 1.3rem;
+      font-style: italic;
+      border-left: 8px solid var(--maroon);
+      box-shadow: 0 5px 0 #f1cfc5;
+      color: #3f2e2e;
+    }
+
+    .message-box i {
+      color: var(--maroon);
+      margin-right: 8px;
+    }
+
+    .humor {
+      background: #fff2e5;
+      border-radius: 30px;
+      padding: 1rem 2rem;
+      margin: 2rem 0 1rem;
+      display: inline-block;
+      font-size: 1.1rem;
+      border: 2px dashed var(--maroon-light);
+    }
+
+    /* surprise */
+    #surprise-section {
+      display: none;
+      margin-top: 2rem;
+      background: linear-gradient(125deg, #fff3ed, #fef0ea);
+      border-radius: 60px 60px 40px 40px;
+      padding: 2.5rem 2rem;
+      border: 2px solid var(--maroon);
+      box-shadow: 0 25px 35px -15px #b76e79;
+      transition: all 0.5s ease;
+    }
+
+    #surprise-section.show {
+      display: block;
+      animation: fadePop 0.7s;
+    }
+
+    @keyframes fadePop {
+      0% { opacity: 0; transform: scale(0.96); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .secret-trigger-area {
+      text-align: center;
+      margin: 4rem 0 2rem;
+      cursor: pointer;
+    }
+
+    .secret-btn {
+      background: none;
+      border: 2px dotted var(--maroon-light);
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      font-size: 1rem;
+      color: var(--maroon);
+      transition: 0.25s;
+      background: rgba(255, 255, 240, 0.6);
+    }
+
+    .secret-btn i {
+      margin-right: 8px;
+    }
+
+    .secret-btn:hover {
+      background: var(--maroon);
+      color: white;
+      border: 2px dotted white;
+    }
+
+    /* galeri foto */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .photo-card {
+      background: white;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 8px 18px -6px rgba(139, 90, 90, 0.2);
+      transition: transform 0.25s ease, box-shadow 0.3s;
+      border: 1px solid #ffd9cf;
+    }
+
+    .photo-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 28px -8px #b77b7b;
+    }
+
+    .photo-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #ecdad0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden; /* penting agar gambar tidak keluar border */
+    }
+
+    .photo-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-caption {
+      padding: 0.8rem 1rem;
+      text-align: center;
+      font-weight: 400;
+      background: rgba(255, 250, 245, 0.9);
+      border-top: 1px dashed var(--maroon-light);
+      font-size: 0.95rem;
+      color: #5b3e3e;
+    }
+
+    /* musik tombol */
+    .music-player {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 999;
+      background: white;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 16px rgba(139, 90, 90, 0.25);
+      border: 2px solid var(--maroon);
+      cursor: pointer;
+      transition: 0.2s;
+      color: var(--maroon);
+      font-size: 1.6rem;
+    }
+
+    .music-player:hover {
+      transform: scale(1.1);
+      background: var(--maroon);
+      color: white;
+      border-color: white;
+    }
+
+    .music-player.playing {
+      background: var(--maroon);
+      color: white;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0.5rem 1rem;
+      color: #a77e7e;
+      font-size: 0.95rem;
+      border-top: 1px dashed #dbb6ae;
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.8rem; }
+      .story-item { flex-direction: column; }
+      .story-year { border-right: none; border-bottom: 2px solid var(--pink-pastel); padding-bottom: 0.4rem; }
+      h2 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MUSIK PLAYER FLOATING -->
+  <div class="music-player" id="musicToggle">
+    <i class="fas fa-music" id="musicIcon"></i>
+  </div>
+  <audio id="bgMusic" loop preload="metadata">
+    <!-- Ganti dengan file musik kamu: lagu.mp3 -->
+    <source src="lagu.mp3" type="audio/mpeg">
+    Browser tidak mendukung audio.
+  </audio>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <i class="fas fa-heart"></i>
+    <h1>Untuk Sukma, &nbsp;Yang berhasil aku panggil sayang</h1>
+    <div class="mystery-text">
+      <i class="fas fa-envelope-open-text" style="margin-right: 8px;"></i>
+      "ada kotak virtual disini. bukan kotak biasa, tapi isi lanjutan dari hadiah sweet seventeen kemarin :D."
+    </div>
+    <p style="margin-bottom: 2rem; color: #6b4f4f;">— pelan-pelan buka, satu per satu —</p>
+    <a href="#start" class="btn">✧ buka pintu hati ✧</a>
+  </section>
+
+  <div class="container" id="start">
+
+    <!-- CERITA PERJALANAN CINTA -->
+    <section class="section-card reveal" id="story">
+      <h2><i class="fas fa-feather-alt"></i> Mengingat Masa Canggung</h2>
+      <div class="story-grid">
+        <div class="story-item">
+          <span class="story-year">15 Feb 2025 ~ Momen ga ekspek :v</span>
+          <div class="story-desc">Ternyata tepat tanggal 15 tahun lalu, kamu pertama kalianya ngechat pake hp baru, jujur disini aku seneng tau makanya langsung bantu kamu masukin ke semua grup, ehh malah keterusan bahas yang lainn wkwkwkw.</div>
+        </div>
+        <div class="story-item">
+          <span class="story-year">22 Maret 2025 ~ Disini Momen "Klik" yang bikin tambah deket</span>
+          <div class="story-desc">berawal dari ngebahas tentang "Cara Ikhlas" disini aku ngerasa bisa cerita jujurr sama kamu, kamunya juga welcome dan syukurr obrolannya ngalir begitu aja. <strong>ingat waktu aku bahas temen aku yang obsessed sama cewenya?</strong> itu aku beraniin diri buat masuk ke cerita kamu sedikit-sedikit hehe</div>
+        </div>
+        <div class="story-item">
+          <span class="story-year">25 April 2025 ~ Cinta Memberikan Keberanian, Eakk :v </span>
+          <div class="story-desc">Aku muter otak banget disini, buat cari waktu bisa ngasih kado ultah kamu, disini kamu kondisinya lagi ga baik juga, aku nyaris batalin kasih kadonya, cuma apaa yaa yang bikin aku berani waktu itu? kamu bisa prediksi ga?.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERI FOTO KENANGAN (TAMBAHAN BARU) -->
+    <section class="section-card reveal">
+      <h2><i class="fas fa-camera-retro"></i> galeri foto kita</h2>
+      <div class="gallery-grid">
+        <!-- Foto 1 -->
+        <div class="photo-card">
+          <div class="photo-img">
+            <img src="foto1.jpg" alt="Fotbar Iftar">
+          </div>
+          <div class="photo-caption">Fotbar Iftar Jama'i'liat deh muka aku udah ga karuan ssaking cape + malu nya</div>
+        </div>
+        <!-- Foto 2 -->
+        <div class="photo-card">
+          <div class="photo-img">
+            <img src="foto2.jpg" alt="Fotbar Paling bikin malu">
+          </div>
+          <div class="photo-caption">Fotbar Paling bikin aku malu, rasanya aku mau ngulang waktu itu biar bisa lebih cool, lagi-lagi cinta ngasih aku "keberanian" eakk</div>
+        </div>
+        <!-- Foto 3 -->
+        <div class="photo-card">
+          <div class="photo-img">
+            <img src="foto3.jpg" alt="Fotbar sama biduan">
+          </div>
+          <div class="photo-caption">Fotbar sama biduan, disini kamu blunder ya? berakhir di cengcengin</div>
+        </div>
+        <!-- Foto 4 -->
+        <div class="photo-card">
+          <div class="photo-img">
+            <img src="foto4.jpg" alt="Foto screenshot">
+          </div>
+          <div class="photo-caption">Ini foto yang aku screenshot sejak lama, mau kamu atau aku, disini belum secakep sekarang</div>
+        </div>
+      </div>
+      <p style="text-align: center; margin-top: 1rem; color: #926b6b;"><i class="fas fa-images"></i> Ini cuma sedikit yang aku tunjukin, tapi aku sambil inget-inget momennya sambil bikin web ini :D</p>
+    </section>
+
+    <!-- MOMEN SEDERHANA -->
+    <section class="section-card reveal">
+      <h2><i class="fas fa-cloud-sun"></i> Momen-momen yang bakal aku kangenin, kamu sependapat?</h2>
+      <div class="moment-grid">
+        <div class="moment-card"><i class="fas fa-pizza-slice"></i> Bikin teks MC bareng, kedepannya ini mungkin ganisa diulang</div>
+        <div class="moment-card"><i class="fas fa-tv"></i> Bikin naskah film, ini ada kesempatan buat dilakuin lagi, tapi emang kamu masih mau? :D</div>
+        <div class="moment-card"><i class="fas fa-car"></i> Dimarahin sama kakel wkwk, maaf yak aku bingung respon apa pas kamu nangis kaya gitu</div>
+        <div class="moment-card"><i class="fas fa-bed"></i> Respon kamu waktu aku kasih kamu cue card bakal aku inget terus, aku suka ekspresi itu</div>
+      </div>
+      <div class="humor">
+        🤭 *flashback: Waktu kamu salting begitu, pengen aku ledekin rasanya, tapi aku juga ikut salting terus jadi ga sempet dehh ledekinnya*
+      </div>
+    </section>
+
+    <!-- CATATAN HAL DISUKAI -->
+    <section class="section-card reveal">
+      <h2><i class="fas fa-heart"></i> Hal kecil dari kamu, tapi bisa bikin aku "siap 86" dalam menjalani hidup</h2>
+      <ul class="like-list">
+        <li><i class="fas fa-laugh-squint"></i> Cara kamu senyum sambil liat ke arah aku. </li>
+        <li><i class="fas fa-coffee"></i> Suara kamu yang dibikin imut secara ga sadar. </li>
+        <li><i class="fas fa-music"></i> Ekspresi kaget kamu pas papasan sama aku wkwk. </li>
+        <li><i class="fas fa-hand-sparkles"></i> Cara kamu berani nasehatin aku ketika aku lagi ga baik, aku respect itu. </li>
+        <li><i class="fas fa-moon"></i> Pap rumahan yang kamu kirim bikin aku kesemsem lebih dari yang kamu banyangin (aku suka lama-lamain liatnga karena suka sekali liat)</li>
+      </ul>
+    </section>
+
+    <!-- PESAN TULISAN TANGAN -->
+    <section class="section-card reveal">
+      <h2><i class="fas fa-pen-fancy"></i> Secarik Pesan</h2>
+      <div class="message-box">
+        <i class="fas fa-quote-left"></i> 
+        jujur, aku engga nyangka bisa masuk dunia kamu, sedari awal aku tau kamu orang yang super bisa ngertiin orang lain, cara kamu natap aja udah bisa bikin orang mikir "wah ni orang merhatiin banget ya!" wajar kalo banyak yang akrab sama kamu, wajar juga kalo aku sampe jatuh hati sama kamu*
+        <div style="margin-top: 1.2rem; font-style: normal; text-align: right;">— dari aku yang selalu bangga sama kamu</div>
+      </div>
+    </section>
+
+    <!-- TOMBOL RAHASIA -->
+    <div class="secret-trigger-area reveal">
+      <button class="secret-btn" id="secretClickBtn"><i class="fas fa-gift"></i> Ada amplop kecil tersembunyi... klik atau scroll sampai habis</button>
+    </div>
+
+    <!-- SURPRISE SECTION -->
+    <section id="surprise-section">
+      <h2 style="margin-top: 0;"><i class="fas fa-star"></i> untuk halaman terakhir ...</h2>
+      <div style="font-size: 1.3rem; margin-bottom: 1.5rem;">
+        <i class="fas fa-heart" style="color: #a55252;"></i>
+        <i class="fas fa-heart" style="color: #b76e79;"></i>
+        <i class="fas fa-heart" style="color: #c65353;"></i>
+      </div>
+      <p style="font-size: 1.4rem; font-weight: 300; margin-bottom: 1rem;">Sayang… terima kasih sudah hadir dan memilih aku.</p>
+      <p style="background: white; border-radius: 40px; padding: 1.5rem; font-size: 1.1rem;">
+        mungkin lebay yaa, tapi kamu udah kasih aku dampak besar-besaran, saat ini sebagian besar bahkan sampai 85% motivasi aku timbulnya dari keinginan aku buat bisa upgrade sama kamu, aku masih usaha, semoga rencana aku terlaksana tepat waktu ya, Aku seneng banget bisa kenal kamu, aku seneng ada yang bisa paham kondisi aku, dan aku seneng bahwa orangnya ternyata kamu :) <br/><br/>
+        <span style="color: #9b5c5c;"><i class="fas fa-hand-holding-heart"></i> dan inget, janji itu ga realistis tapi selama dengan aku janji bisa bikin kamu tenang, aku bakal lakuin.</span>
+      </p>
+      <div style="margin-top: 2rem; font-size: 1.2rem;">
+        🤍 <strong>Sayanggkuu, Sukma</strong>
+      </div>
+      <div class="humor" style="margin: 2rem 0 0 0; background: #faded3;">
+        <i class="fas fa-camera-retro"></i> oh iya, disaat kamu ngebayangin kita life after graduate nanti, fokus dulu sama diri kamu yaa, kapanpun kamu butuh obrolan ini, kabarin aku aja
+      </div>
+    </section>
+
+    <footer class="reveal">
+      <p>♥ dibuat khusus untuk satu orang, yang berhasil bikin aku berani manggil "sayang" ♥</p>
+      <p style="margin-top: 0.5rem; font-size: 0.8rem;">⬇️ Ini yang bisa aku kasih untuk saat ini, semoga kedepannya bisa lebih dari ini  ⬇️</p>
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      // reveal scroll
+      const revealElements = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+      revealElements.forEach(el => observer.observe(el));
+
+      // SURPRISE SECTION (tombol + scroll)
+      const surprise = document.getElementById('surprise-section');
+      const secretBtn = document.getElementById('secretClickBtn');
+      let surpriseShown = false;
+
+      function showSurprise() {
+        if (surpriseShown) return;
+        surpriseShown = true;
+        surprise.classList.add('show');
+        surprise.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      secretBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showSurprise();
+      });
+
+      const footer = document.querySelector('footer');
+      const footerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !surpriseShown) {
+            showSurprise();
+          }
+        });
+      }, { threshold: 0.3 });
+      footerObserver.observe(footer);
+
+      // MUSIK kontrol
+      const music = document.getElementById('bgMusic');
+      const toggleBtn = document.getElementById('musicToggle');
+      const icon = document.getElementById('musicIcon');
+
+      toggleBtn.addEventListener('click', function() {
+        if (music.paused) {
+          music.play().catch(e => console.log('play gagal, interaksi dulu', e));
+          toggle
