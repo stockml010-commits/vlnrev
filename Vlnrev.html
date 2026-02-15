@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Disajikan Personal — untukmu (dengan musik & foto)</title>
-  <!-- Font & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
@@ -22,6 +21,7 @@
       color: #4a3b3b;
       line-height: 1.6;
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
     :root {
@@ -339,7 +339,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden; /* penting agar gambar tidak keluar border */
+      overflow: hidden;
     }
 
     .photo-img img {
@@ -415,7 +415,6 @@
     <i class="fas fa-music" id="musicIcon"></i>
   </div>
   <audio id="bgMusic" loop preload="metadata">
-    <!-- Ganti dengan file musik kamu: lagu.mp3 -->
     <source src="lagu.mp3" type="audio/mpeg">
     Browser tidak mendukung audio.
   </audio>
@@ -433,7 +432,8 @@
   </section>
 
   <div class="container" id="start">
-
+<!-- AKHIR BAGIAN 1 -->
+    <!-- MULAI BAGIAN 2 -->
     <!-- CERITA PERJALANAN CINTA -->
     <section class="section-card reveal" id="story">
       <h2><i class="fas fa-feather-alt"></i> Mengingat Masa Canggung</h2>
@@ -453,32 +453,28 @@
       </div>
     </section>
 
-    <!-- GALERI FOTO KENANGAN (TAMBAHAN BARU) -->
+    <!-- GALERI FOTO KENANGAN -->
     <section class="section-card reveal">
       <h2><i class="fas fa-camera-retro"></i> galeri foto kita</h2>
       <div class="gallery-grid">
-        <!-- Foto 1 -->
         <div class="photo-card">
           <div class="photo-img">
             <img src="foto1.jpg" alt="Fotbar Iftar">
           </div>
           <div class="photo-caption">Fotbar Iftar Jama'i'liat deh muka aku udah ga karuan ssaking cape + malu nya</div>
         </div>
-        <!-- Foto 2 -->
         <div class="photo-card">
           <div class="photo-img">
             <img src="foto2.jpg" alt="Fotbar Paling bikin malu">
           </div>
           <div class="photo-caption">Fotbar Paling bikin aku malu, rasanya aku mau ngulang waktu itu biar bisa lebih cool, lagi-lagi cinta ngasih aku "keberanian" eakk</div>
         </div>
-        <!-- Foto 3 -->
         <div class="photo-card">
           <div class="photo-img">
             <img src="foto3.jpg" alt="Fotbar sama biduan">
           </div>
           <div class="photo-caption">Fotbar sama biduan, disini kamu blunder ya? berakhir di cengcengin</div>
         </div>
-        <!-- Foto 4 -->
         <div class="photo-card">
           <div class="photo-img">
             <img src="foto4.jpg" alt="Foto screenshot">
@@ -538,7 +534,7 @@
         <i class="fas fa-heart" style="color: #b76e79;"></i>
         <i class="fas fa-heart" style="color: #c65353;"></i>
       </div>
-      <p style="font-size: 1.4rem; font-weight: 300; margin-bottom: 1rem;">Sayang… terima kasih sudah hadir dan memilih aku.</p>
+      <p style="font-size: 1.4rem; font-weight: 300; margin-bottom: 1rem;">Sayang.. Makasih udah hadir dan milih aku.</p>
       <p style="background: white; border-radius: 40px; padding: 1.5rem; font-size: 1.1rem;">
         mungkin lebay yaa, tapi kamu udah kasih aku dampak besar-besaran, saat ini sebagian besar bahkan sampai 85% motivasi aku timbulnya dari keinginan aku buat bisa upgrade sama kamu, aku masih usaha, semoga rencana aku terlaksana tepat waktu ya, Aku seneng banget bisa kenal kamu, aku seneng ada yang bisa paham kondisi aku, dan aku seneng bahwa orangnya ternyata kamu :) <br/><br/>
         <span style="color: #9b5c5c;"><i class="fas fa-hand-holding-heart"></i> dan inget, janji itu ga realistis tapi selama dengan aku janji bisa bikin kamu tenang, aku bakal lakuin.</span>
@@ -559,7 +555,6 @@
 
   <script>
     (function() {
-      // reveal scroll
       const revealElements = document.querySelectorAll('.reveal');
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -570,7 +565,6 @@
       }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
       revealElements.forEach(el => observer.observe(el));
 
-      // SURPRISE SECTION (tombol + scroll)
       const surprise = document.getElementById('surprise-section');
       const secretBtn = document.getElementById('secretClickBtn');
       let surpriseShown = false;
@@ -597,7 +591,6 @@
       }, { threshold: 0.3 });
       footerObserver.observe(footer);
 
-      // MUSIK kontrol
       const music = document.getElementById('bgMusic');
       const toggleBtn = document.getElementById('musicToggle');
       const icon = document.getElementById('musicIcon');
@@ -605,4 +598,25 @@
       toggleBtn.addEventListener('click', function() {
         if (music.paused) {
           music.play().catch(e => console.log('play gagal, interaksi dulu', e));
-          toggle
+          toggleBtn.classList.add('playing');
+          icon.classList.remove('fa-music');
+          icon.classList.add('fa-pause');
+        } else {
+          music.pause();
+          toggleBtn.classList.remove('playing');
+          icon.classList.remove('fa-pause');
+          icon.classList.add('fa-music');
+        }
+      });
+
+      music.addEventListener('ended', function() {
+        toggleBtn.classList.remove('playing');
+        icon.classList.remove('fa-pause');
+        icon.classList.add('fa-music');
+      });
+
+      console.log('❤️ halo sayang, i love you! ❤️');
+    })();
+  </script>
+</body>
+</html>
